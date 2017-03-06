@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cylee.syalarm.LoginActivity"
+    android:background="@drawable/main_bg">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/input_container"
+        android:layout_marginBottom="50dp"/>
+    <LinearLayout
+        android:id="@+id/input_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_centerVertical="true">
+        <EditText
+            android:id="@+id/al_name"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:drawableLeft="@drawable/login_icon_name"
+            android:drawablePadding="15dp"
+            android:paddingLeft="15dp"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:paddingRight="15dp"
+            android:textColorHint="#d5d5d5"
+            android:hint="请输入用户名"
+            android:textSize="14sp"
+            android:textColor="#eee"
+            android:background="@drawable/login_item_bg" />
+
+        <EditText
+            android:id="@+id/al_passwd"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:drawableLeft="@drawable/login_icon_passwd"
+            android:drawablePadding="15dp"
+            android:paddingLeft="15dp"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:paddingRight="15dp"
+            android:textColorHint="#d5d5d5"
+            android:hint="请输入密码"
+            android:textSize="14sp"
+            android:textColor="#eee"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/login_item_bg" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/al_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_bn_bg_sel"
+        android:text="登陆"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:textColor="#f5f5f5"
+        android:layout_below="@+id/input_container"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        />
+</RelativeLayout>

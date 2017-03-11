@@ -18,7 +18,7 @@ public class ExecModel {
         private String command;
         private String params;
         private Input(String command, String params){
-            this.url = "/syalarm/exec";
+            this.url = "/shunyihome/exec";
             this.method = Request.Method.POST;
             this.aClass = ExecModel.class;
             this.command = command;

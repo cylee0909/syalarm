@@ -1,30 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 xmlns:tools="http://schemas.android.com/tools">
-    <TextView
-        android:id="@+id/adci_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:textSize="13dp"
-        android:textColor="#F8FBFF"
-        tools:text="一层"
-        android:layout_marginLeft="16dp"/>
-    
-    <ImageView
-        android:id="@+id/adci_state"
-        android:layout_toRightOf="@+id/afci_name"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:src="@drawable/alarm"
-        />
-    <View
+    <com.cylee.syalarm.StateRelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_alignParentBottom="true"
-        android:background="#88FFFFFF"/>
+        android:layout_height="48dp">
+        <TextView
+            android:id="@+id/adci_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="13dp"
+            android:textColor="#F8FBFF"
+            tools:text="一层"
+            android:layout_marginLeft="16dp"/>
+
+        <ImageView
+            android:id="@+id/adci_state"
+            android:layout_toRightOf="@+id/adci_name"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/alarm"
+            />
+        <TextView
+            android:id="@+id/adci_close_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/adci_name"
+            android:text="已关闭"
+            android:visibility="gone"
+            android:textColor="#eeeeee"
+            android:layout_marginLeft="10dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#88FFFFFF"/>
+    </com.cylee.syalarm.StateRelativeLayout>
 </RelativeLayout>

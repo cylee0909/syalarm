@@ -87,7 +87,7 @@ class FloorChooseActivity : BaseActivity() {
             }
             var data = getItem(position) as FloorModel.FloorItem
             holder.title?.text = data.name
-            holder.state?.visibility = if (data.state == 0) View.VISIBLE else View.GONE
+            holder.state?.visibility = if (data.state == 0) View.GONE else View.VISIBLE
             return oldView
         }
 

@@ -3,6 +3,7 @@ package com.cylee.syalarm
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -17,7 +18,6 @@ import com.cylee.lib.widget.dialog.DialogUtil
 import com.cylee.syalarm.model.BaseReqModel
 import com.cylee.syalarm.model.DeviceModel
 import com.cylee.syalarm.model.ExecModel
-import com.cylee.syalarm.model.FloorModel
 
 class DeviceChooseActivity : BaseActivity() {
     var listView : ListView? = null
@@ -30,7 +30,7 @@ class DeviceChooseActivity : BaseActivity() {
         val INPUT_CID = "INPUT_CID"
         val INPUT_FID = "INPUT_FID"
         fun createIntent(context : Context, id : Int, fid : Int): Intent {
-            var intent = Intent(context, FloorChooseActivity::class.java);
+            var intent = Intent(context, DeviceChooseActivity::class.java);
             intent.putExtra(INPUT_CID, id)
             intent.putExtra(INPUT_FID, fid)
             return intent
@@ -55,12 +55,23 @@ class DeviceChooseActivity : BaseActivity() {
                     }
 
                     override fun OnRightButtonClick() {
+                        dialogUtil.showWaitingDialog(this@DeviceChooseActivity, "正在关闭...")
                         Net.post(this@DeviceChooseActivity, ExecModel.buidInput("close", BaseReqModel.createReq("cid", cid.toString(), "fid", fid.toString(), "did", device.did.toString())),
                                 object : Net.SuccessListener<ExecModel>() {
                                     override fun onResponse(response: ExecModel?) {
-
+                                        dialogUtil.dismissWaitingDialog()
+                                        if (TextUtils.equals("success", response?.result)) {
+                                            DialogUtil.showToast("关闭成功!")
+                                            device.ostate = 1;
+                                            adapter?.notifyDataSetChanged()
+                                        }
                                     }
-                                }, null)
+                                }, object : Net.ErrorListener(){
+                            override fun onErrorResponse(e: NetError?) {
+                                dialogUtil.dismissWaitingDialog()
+                                DialogUtil.showToast("关闭失败!")
+                            }
+                        })
                     }
                 }, "关闭当前设备？")
                 return@setOnItemLongClickListener true
@@ -76,9 +87,9 @@ class DeviceChooseActivity : BaseActivity() {
                 dialogUtil.dismissWaitingDialog()
                 dataList.clear()
                 if (response != null && response.result != null) {
-                    var floorModel = DeviceModel.fromJson(response.result)
-                    if (floorModel != null && floorModel.devices != null) {
-                        for (floor in floorModel.devices) {
+                    var deviceModel = DeviceModel.fromJson(response.result)
+                    if (deviceModel != null && deviceModel.devices != null) {
+                        for (floor in deviceModel.devices) {
                             dataList.add(floor)
                         }
                     }
@@ -102,14 +113,22 @@ class DeviceChooseActivity : BaseActivity() {
                 holder = Holder()
                 holder.title = oldView.bind(R.id.adci_name)
                 holder.state = oldView.bind(R.id.adci_state)
+                holder.closeTip = oldView.bind(R.id.adci_close_tip)
                 oldView.setTag(holder)
             } else{
                 oldView = convertView
                 holder = oldView.getTag() as Holder
             }
-            var data = getItem(position) as FloorModel.FloorItem
+            var data = getItem(position) as DeviceModel.DeviceItem
             holder.title?.text = data.name
-            holder.state?.visibility = if (data.state == 0) View.VISIBLE else View.GONE
+            holder.state?.setImageResource(if (data.state == 0) R.drawable.status_normal else R.drawable.alarm)
+            if (data.ostate == 0){
+                holder.state?.visibility = View.VISIBLE
+                holder.closeTip?.visibility = View.GONE
+            } else {
+                holder.state?.visibility = View.GONE
+                holder.closeTip?.visibility = View.VISIBLE
+            }
             return oldView
         }
 
@@ -129,5 +148,6 @@ class DeviceChooseActivity : BaseActivity() {
     class Holder {
         var title : TextView? = null
         var state : ImageView? = null
+        var closeTip : TextView? = null
     }
 }

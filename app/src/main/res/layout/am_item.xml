@@ -3,7 +3,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <RelativeLayout
+    <com.cylee.syalarm.StateRelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -57,5 +57,5 @@
                     tools:text="异常"/>
             </LinearLayout>
         </LinearLayout>
-    </RelativeLayout>
+    </com.cylee.syalarm.StateRelativeLayout>
 </RelativeLayout>

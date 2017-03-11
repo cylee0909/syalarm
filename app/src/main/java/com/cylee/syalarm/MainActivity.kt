@@ -2,6 +2,7 @@ package com.cylee.syalarm
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -85,6 +86,8 @@ class MainActivity : BaseActivity() {
             holder.icon?.setImageResource(data.iconId)
             holder.title?.text = data.title
             holder.state?.text = if (data.state == 0) "正常" else "异常"
+            holder.state?.setTextColor(if (data.state == 0)
+                Color.parseColor("#aafea6") else Color.parseColor("#ff8989"))
             return oldView
         }
 

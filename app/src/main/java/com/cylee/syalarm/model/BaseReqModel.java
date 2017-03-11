@@ -25,6 +25,7 @@ public class BaseReqModel {
                     jsonObject.put(key, value);
                 }
             }
+            return jsonObject.toString();
         } catch (JSONException e) {
             e.printStackTrace();
         }

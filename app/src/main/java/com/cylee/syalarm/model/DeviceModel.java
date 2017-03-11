@@ -19,6 +19,10 @@ public class DeviceModel {
          * 操作的状态
          */
         public int astate;
+        /**
+         * 运行的状态,0正在运行,其他已关闭
+         */
+        public int ostate;
     }
 
     public static DeviceModel fromJson(String json) {

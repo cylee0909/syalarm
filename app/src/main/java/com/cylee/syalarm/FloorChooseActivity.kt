@@ -14,45 +14,50 @@ import com.cylee.androidlib.base.BaseActivity
 import com.cylee.androidlib.net.Net
 import com.cylee.androidlib.net.NetError
 import com.cylee.lib.widget.dialog.DialogUtil
-import com.cylee.syalarm.entity.EntryItem
 import com.cylee.syalarm.model.BaseReqModel
 import com.cylee.syalarm.model.ExecModel
-import com.cylee.syalarm.model.MainListModel
+import com.cylee.syalarm.model.FloorModel
 
-class MainActivity : BaseActivity() {
+class FloorChooseActivity : BaseActivity() {
     var listView : ListView? = null
-    var dataList:MutableList<EntryItem> = mutableListOf()
     var adapter : InnerAdapter? = null
+    var dataList : MutableList<FloorModel.FloorItem> = mutableListOf()
+    var cid = 0;
+
     companion object {
-        fun createIntent(context : Context): Intent {
-            return Intent(context, MainActivity::class.java);
+        val INPUT_CID = "INPUT_CID"
+        fun createIntent(context : Context, id : Int): Intent {
+            var intent = Intent(context, FloorChooseActivity::class.java);
+            intent.putExtra(INPUT_CID, id)
+            return intent
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        listView = bind(R.id.am_list)
+        setContentView(R.layout.activity_floor_choose)
+        listView = bind(R.id.afc_list)
         adapter = InnerAdapter()
         listView?.adapter = adapter
+        cid = intent.getIntExtra(INPUT_CID, 0)
+        loadData(cid)
         listView?.setOnItemClickListener { adapterView, view, i, l ->
-            var entryItem = dataList[i]
-            startActivity(FloorChooseActivity.createIntent(this, entryItem.id))
+            var floorItem = dataList[i]
+            startActivity(DeviceChooseActivity.createIntent(this, cid, floorItem.fid))
         }
-        loadData()
     }
 
-    fun loadData() {
+    fun loadData(id: Int) {
         dialogUtil.showWaitingDialog(this, "加载中...")
-        Net.post(this, ExecModel.buidInput("mainlist", BaseReqModel.createReq()), object : Net.SuccessListener<ExecModel>() {
+        Net.post(this, ExecModel.buidInput("floor", BaseReqModel.createReq("cid", id.toString())), object : Net.SuccessListener<ExecModel>() {
             override fun onResponse(response: ExecModel?) {
-                dataList.clear()
                 dialogUtil.dismissWaitingDialog()
-                if (response != null) {
-                    var data = MainListModel.fromJson(response.result);
-                    if (data != null && data.mainStates != null) {
-                        for (a in data.mainStates) {
-                            dataList.add(EntryItem.create(a.cid, a.state))
+                dataList.clear()
+                if (response != null && response.result != null) {
+                    var floorModel = FloorModel.fromJson(response.result)
+                    if (floorModel != null && floorModel.floors != null) {
+                        for (floor in floorModel.floors) {
+                            dataList.add(floor)
                         }
                     }
                 }
@@ -71,20 +76,18 @@ class MainActivity : BaseActivity() {
             var holder : Holder
             var oldView : View
             if (convertView == null) {
-                oldView = View.inflate(this@MainActivity, R.layout.am_item, null)
+                oldView = View.inflate(this@FloorChooseActivity, R.layout.afc_item, null)
                 holder = Holder()
-                holder.icon = oldView.bind(R.id.ai_icon)
-                holder.state = oldView.bind(R.id.ai_status)
-                holder.title = oldView.bind(R.id.ai_title)
+                holder.title = oldView.bind(R.id.afci_name)
+                holder.state = oldView.bind(R.id.afci_state)
                 oldView.setTag(holder)
             } else{
                 oldView = convertView
                 holder = oldView.getTag() as Holder
             }
-            var data = getItem(position) as EntryItem
-            holder.icon?.setImageResource(data.iconId)
-            holder.title?.text = data.title
-            holder.state?.text = if (data.state == 0) "正常" else "异常"
+            var data = getItem(position) as FloorModel.FloorItem
+            holder.title?.text = data.name
+            holder.state?.visibility = if (data.state == 0) View.VISIBLE else View.GONE
             return oldView
         }
 
@@ -103,7 +106,6 @@ class MainActivity : BaseActivity() {
 
     class Holder {
         var title : TextView? = null
-        var icon : ImageView? = null
-        var state : TextView? = null
+        var state : ImageView? = null
     }
 }

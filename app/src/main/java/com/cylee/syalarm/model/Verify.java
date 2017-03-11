@@ -1,4 +1,4 @@
-package com.cylee.syalarm.mode;
+package com.cylee.syalarm.model;
 
 import com.android.volley.Request;
 import com.cylee.androidlib.net.InputBase;

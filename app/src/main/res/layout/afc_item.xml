@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:id="@+id/afci_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:textSize="13dp"
+        android:textColor="#F8FBFF"
+        tools:text="一层"
+        android:layout_marginLeft="16dp"/>
+    
+    <ImageView
+        android:id="@+id/afci_state"
+        android:layout_toRightOf="@+id/afci_name"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:src="@drawable/alarm"
+        />
+    
+    <ImageView
+        android:layout_width="10dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/arrow"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="#88FFFFFF"/>
+</RelativeLayout>

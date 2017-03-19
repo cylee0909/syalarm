@@ -14,13 +14,16 @@ import cn.csnbgsh.herbarium.bind
 import com.cylee.androidlib.base.BaseActivity
 import com.cylee.androidlib.net.Net
 import com.cylee.androidlib.net.NetError
+import com.cylee.androidlib.util.PreferenceUtils
 import com.cylee.lib.widget.dialog.DialogUtil
 import com.cylee.syalarm.entity.EntryItem
 import com.cylee.syalarm.model.BaseReqModel
 import com.cylee.syalarm.model.ExecModel
 import com.cylee.syalarm.model.MainListModel
+import com.umeng.message.PushAgent
+import com.umeng.message.UTrack
 
-class MainActivity : BaseActivity() {
+class MainActivity : BasePushActivity() {
     var listView : ListView? = null
     var dataList:MutableList<EntryItem> = mutableListOf()
     var adapter : InnerAdapter? = null
@@ -32,6 +35,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        registerPushAlias()
         setContentView(R.layout.activity_main)
         listView = bind(R.id.am_list)
         adapter = InnerAdapter()
@@ -41,6 +45,20 @@ class MainActivity : BaseActivity() {
             startActivity(FloorChooseActivity.createIntent(this, entryItem.id))
         }
         loadData()
+    }
+
+    fun registerPushAlias() {
+        var token = PreferenceUtils.getString(AlarmPreference.LOGIN_TOKEN)
+//        PushAgent.getInstance(this).removeAlias(token, "SELF_ALIAS", object : UTrack.ICallBack {
+//            override fun onMessage(isSuccess: Boolean, message: String) {
+//
+//            }
+//        })
+//        PushAgent.getInstance(this).addAlias(token, "SELF_ALIAS", object : UTrack.ICallBack {
+//            override fun onMessage(isSuccess: Boolean, message: String) {
+//
+//            }
+//        })
     }
 
     fun loadData() {

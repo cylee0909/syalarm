@@ -17,7 +17,7 @@ import com.cylee.lib.widget.dialog.DialogUtil
 import com.cylee.syalarm.model.ExecModel
 import com.cylee.syalarm.model.LoginModel
 
-class LoginActivity : BaseActivity() {
+class LoginActivity : BasePushActivity() {
     var nameEdit : EditText? = null
     var passwdEdit : EditText? = null
     var loginBn : TextView? = null

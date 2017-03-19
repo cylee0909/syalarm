@@ -18,7 +18,7 @@ import com.cylee.syalarm.model.BaseReqModel
 import com.cylee.syalarm.model.ExecModel
 import com.cylee.syalarm.model.FloorModel
 
-class FloorChooseActivity : BaseActivity() {
+class FloorChooseActivity : BasePushActivity() {
     var listView : ListView? = null
     var adapter : InnerAdapter? = null
     var dataList : MutableList<FloorModel.FloorItem> = mutableListOf()

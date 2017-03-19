@@ -19,7 +19,7 @@ import com.cylee.syalarm.model.BaseReqModel
 import com.cylee.syalarm.model.DeviceModel
 import com.cylee.syalarm.model.ExecModel
 
-class DeviceChooseActivity : BaseActivity() {
+class DeviceChooseActivity : BasePushActivity() {
     var listView : ListView? = null
     var adapter : InnerAdapter? = null
     var dataList : MutableList<DeviceModel.DeviceItem> = mutableListOf()

@@ -1,19 +1,14 @@
 package com.cylee.syalarm
 
-import android.app.Notification
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context
 import android.os.Environment
-import android.widget.RemoteViews
 import com.cylee.androidlib.base.BaseApplication
 import com.cylee.androidlib.net.Config
 import com.cylee.androidlib.util.Log
 import com.umeng.message.IUmengRegisterCallback
 import com.umeng.message.MsgConstant
 import com.umeng.message.PushAgent
-import com.umeng.message.UmengMessageHandler
-import com.umeng.message.entity.UMessage
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -38,35 +33,12 @@ class App : BaseApplication() {
         val mPushAgent = PushAgent.getInstance(this)
         //注册推送服务，每次调用register方法都会回调该接口
         mPushAgent.register(object : IUmengRegisterCallback {
-            override fun onSuccess(p0: String?) {
+            override fun onSuccess(token: String?) {
+                Log.d("cyleetoken", token)
             }
             override fun onFailure(p0: String?, p1: String?) {
             }
         })
-        val messageHandler = object : UmengMessageHandler() {
-            override fun getNotification(context: Context, msg: UMessage): Notification {
-                when (msg.builder_id) {
-                    1 -> {
-                        val builder = Notification.Builder(context)
-                        val myNotificationView = RemoteViews(context.getPackageName(),
-                                R.layout.notification_view)
-                        myNotificationView.setTextViewText(R.id.notification_title, msg.title)
-                        myNotificationView.setTextViewText(R.id.notification_text, msg.text)
-                        myNotificationView.setImageViewBitmap(R.id.notification_large_icon,
-                                getLargeIcon(context, msg))
-                        myNotificationView.setImageViewResource(R.id.notification_small_icon,
-                                getSmallIconId(context, msg))
-                        builder.setContent(myNotificationView).setSmallIcon(getSmallIconId(context, msg)).setTicker(msg.ticker).setAutoCancel(true)
-
-                        return builder.getNotification()
-                    }
-                    else ->
-                        //默认为0，若填写的builder_id并不存在，也使用默认。
-                        return super.getNotification(context, msg)
-                }
-            }
-        }
-        mPushAgent.messageHandler = messageHandler
         mPushAgent.setDebugMode(BuildConfig.DEBUG)
         mPushAgent.setNoDisturbMode(0, 0, 0, 0)
         mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SERVER) //声音

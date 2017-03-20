@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -11,7 +12,6 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import cn.csnbgsh.herbarium.bind
-import com.cylee.androidlib.base.BaseActivity
 import com.cylee.androidlib.net.Net
 import com.cylee.androidlib.net.NetError
 import com.cylee.androidlib.util.PreferenceUtils
@@ -49,16 +49,13 @@ class MainActivity : BasePushActivity() {
 
     fun registerPushAlias() {
         var token = PreferenceUtils.getString(AlarmPreference.LOGIN_TOKEN)
-//        PushAgent.getInstance(this).removeAlias(token, "SELF_ALIAS", object : UTrack.ICallBack {
-//            override fun onMessage(isSuccess: Boolean, message: String) {
-//
-//            }
-//        })
-//        PushAgent.getInstance(this).addAlias(token, "SELF_ALIAS", object : UTrack.ICallBack {
-//            override fun onMessage(isSuccess: Boolean, message: String) {
-//
-//            }
-//        })
+        if (!TextUtils.isEmpty(token)) {
+            PushAgent.getInstance(this).addAlias(token, "SELF_ALIAS", object : UTrack.ICallBack {
+                override fun onMessage(isSuccess: Boolean, message: String) {
+
+                }
+            })
+        }
     }
 
     fun loadData() {

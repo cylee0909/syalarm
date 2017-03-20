@@ -28,14 +28,9 @@ class SplashActivity : BasePushActivity() {
         super.onCreate(savedInstanceState)
         TaskUtils.postOnMain(startWork, 2000)
         if (BuildConfig.DEBUG) {
-            PushAgent.getInstance(this).removeAlias("cylee", "SELF_ALIAS", object : UTrack.ICallBack {
+            PushAgent.getInstance(this@SplashActivity).addAlias("cylee", "SELF_ALIAS", object : UTrack.ICallBack {
                 override fun onMessage(isSuccess: Boolean, message: String) {
-                    Log.d("cylee", "remove "+message+" "+isSuccess)
-                    PushAgent.getInstance(this@SplashActivity).addAlias("cylee", "SELF_ALIAS", object : UTrack.ICallBack {
-                        override fun onMessage(isSuccess: Boolean, message: String) {
-                            Log.d("cylee", "add "+message+" "+isSuccess)
-                        }
-                    })
+                    Log.d("cylee", "add "+message+" "+isSuccess)
                 }
             })
         }

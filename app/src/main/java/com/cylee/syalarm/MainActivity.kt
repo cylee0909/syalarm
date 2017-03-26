@@ -14,6 +14,7 @@ import android.widget.TextView
 import cn.csnbgsh.herbarium.bind
 import com.cylee.androidlib.net.Net
 import com.cylee.androidlib.net.NetError
+import com.cylee.androidlib.util.Log
 import com.cylee.androidlib.util.PreferenceUtils
 import com.cylee.lib.widget.dialog.DialogUtil
 import com.cylee.syalarm.entity.EntryItem
@@ -52,7 +53,7 @@ class MainActivity : BasePushActivity() {
         if (!TextUtils.isEmpty(token)) {
             PushAgent.getInstance(this).addAlias(token, "SELF_ALIAS", object : UTrack.ICallBack {
                 override fun onMessage(isSuccess: Boolean, message: String) {
-
+                    Log.d("cyleeregisterpush", "success "+isSuccess+" "+message)
                 }
             })
         }

@@ -23,6 +23,11 @@ public class DeviceModel {
          * 运行的状态,0正在运行,其他已关闭
          */
         public int ostate;
+
+        /**
+         * desc
+         */
+        public String descTip;
     }
 
     public static DeviceModel fromJson(String json) {

@@ -49,7 +49,7 @@ class DeviceChooseActivity : BasePushActivity() {
 
         listView?.setOnItemLongClickListener { adapterView, view, i, l ->
             var device = dataList[i]
-            if (device.state > 0 && device.state == 1) {
+            if (device.state > 0 && device.astate == 1) {
                 dialogUtil.showDialog(this, "取消", "确定", object : DialogUtil.ButtonClickListener {
                     override fun OnLeftButtonClick() {
                     }
@@ -114,12 +114,20 @@ class DeviceChooseActivity : BasePushActivity() {
                 holder.title = oldView.bind(R.id.adci_name)
                 holder.state = oldView.bind(R.id.adci_state)
                 holder.closeTip = oldView.bind(R.id.adci_close_tip)
+                holder.descTip = oldView.bind(R.id.adci_desc_tip)
                 oldView.setTag(holder)
             } else{
                 oldView = convertView
                 holder = oldView.getTag() as Holder
             }
+
             var data = getItem(position) as DeviceModel.DeviceItem
+            if (!TextUtils.isEmpty(data.descTip)) {
+                holder.descTip?.text = data.descTip
+                holder.descTip?.visibility = View.VISIBLE
+            } else {
+                holder.descTip?.visibility = View.GONE
+            }
             holder.title?.text = data.name
             holder.state?.setImageResource(if (data.state == 0) R.drawable.status_normal else R.drawable.alarm)
             if (data.ostate == 0){
@@ -149,5 +157,6 @@ class DeviceChooseActivity : BasePushActivity() {
         var title : TextView? = null
         var state : ImageView? = null
         var closeTip : TextView? = null
+        var descTip : TextView? = null
     }
 }

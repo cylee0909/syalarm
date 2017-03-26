@@ -13,7 +13,9 @@ data class EntryItem(var id : Int, var title:String, var iconId : Int, var state
                 1-> return EntryItem(id, "水流传感器",  R.drawable.water, state)
                 2-> return EntryItem(id, "可燃气传感器",  R.drawable.gas, state)
                 3-> return EntryItem(id, "电机传感器",  R.drawable.electric, state)
-                else -> return EntryItem(id, "温度传感器",  R.drawable.temperature, state)
+                4 -> return EntryItem(id, "温度传感器",  R.drawable.temperature, state)
+                5 -> return EntryItem(id, "报警传感器", R.drawable.temperature, state)
+                else -> return EntryItem(id, "报警传感器", R.drawable.temperature, state)
             }
         }
     }

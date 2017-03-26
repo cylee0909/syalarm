@@ -3,10 +3,10 @@ package com.cylee.syalarm
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.EditText
 import android.widget.TextView
 import cn.csnbgsh.herbarium.bind
-import com.cylee.androidlib.base.BaseActivity
 import com.cylee.androidlib.net.Net
 import com.cylee.androidlib.net.NetError
 import com.cylee.androidlib.thread.Worker
@@ -16,6 +16,7 @@ import com.cylee.androidlib.util.TaskUtils
 import com.cylee.lib.widget.dialog.DialogUtil
 import com.cylee.syalarm.model.ExecModel
 import com.cylee.syalarm.model.LoginModel
+import com.cylee.syalarm.model.TokenModel
 
 class LoginActivity : BasePushActivity() {
     var nameEdit : EditText? = null
@@ -43,16 +44,19 @@ class LoginActivity : BasePushActivity() {
                 override fun onResponse(response: ExecModel?) {
                     dialogUtil.dismissWaitingDialog()
                     if (response != null) {
-                        PreferenceUtils.setString(AlarmPreference.LOGIN_TOKEN, response.result)
-                        TaskUtils.postOnMain(object : Worker() {
-                            override fun work() {
-                                startActivity(MainActivity.createIntent(this@LoginActivity))
-                                finish()
-                            }
-                        }, 300)
-                    } else{
-                        DialogUtil.showToast("登陆失败")
+                        var token = TokenModel.fromJson(response.result)
+                        if (token != null && !TextUtils.isEmpty(token.token)) {
+                            PreferenceUtils.setString(AlarmPreference.LOGIN_TOKEN, token.token)
+                            TaskUtils.postOnMain(object : Worker() {
+                                override fun work() {
+                                    startActivity(MainActivity.createIntent(this@LoginActivity))
+                                    finish()
+                                }
+                            }, 300)
+                            return
+                        }
                     }
+                    DialogUtil.showToast("登陆失败")
                 }
             }, object : Net.ErrorListener() {
                 override fun onErrorResponse(e: NetError?) {

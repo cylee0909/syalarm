@@ -27,13 +27,13 @@ class SplashActivity : BasePushActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         TaskUtils.postOnMain(startWork, 2000)
-        if (BuildConfig.DEBUG) {
-            PushAgent.getInstance(this@SplashActivity).addAlias("cylee", "SELF_ALIAS", object : UTrack.ICallBack {
-                override fun onMessage(isSuccess: Boolean, message: String) {
-                    Log.d("cylee", "add "+message+" "+isSuccess)
-                }
-            })
-        }
+//        if (BuildConfig.DEBUG) {
+//            PushAgent.getInstance(this@SplashActivity).addAlias("cylee", "SELF_ALIAS", object : UTrack.ICallBack {
+//                override fun onMessage(isSuccess: Boolean, message: String) {
+//                    Log.d("cylee", "add "+message+" "+isSuccess)
+//                }
+//            })
+//        }
     }
 
     override fun onBackPressed() {

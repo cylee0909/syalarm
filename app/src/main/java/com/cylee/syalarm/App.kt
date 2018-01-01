@@ -22,7 +22,7 @@ class App : BaseApplication() {
         if (false && BuildConfig.DEBUG) {
             Config.setHost("http://192.168.31.103:8990/")
         } else {
-            Config.setHost("http://123.125.127.161:8990/")
+            Config.setHost("http://123.125.127.186:8990/")
         }
         Log.setLogLevel(if (BuildConfig.DEBUG) Log.OFF else Log.OFF)
         redirectLog()

@@ -16,6 +16,10 @@
 #   public *;
 #}
 
+-keep class com.cylee.syalarm.model.** {*;}
+-keep class com.cylee.syalarm.entity.** {*;}
+
+
 -dontwarn com.taobao.**
 -dontwarn anet.channel.**
 -dontwarn anetwork.channel.**

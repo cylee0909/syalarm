@@ -20,7 +20,7 @@ class App : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
         if (false && BuildConfig.DEBUG) {
-            Config.setHost("http://192.168.31.103:8990/")
+            Config.setHost("http://192.168.1.5:8990/")
         } else {
             Config.setHost("http://123.125.127.186:8990/")
         }

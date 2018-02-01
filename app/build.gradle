@@ -15,11 +15,24 @@ android {
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0"    }
+        versionName "1.0"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("cylee.keystore")
+            storePassword "140547"
+            keyAlias "cylee"
+            keyPassword "140547"
+        }
+    }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
